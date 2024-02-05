@@ -14,6 +14,11 @@ class App extends React.Component {
     this.inputClick = this.inputClick.bind(this)
   }
 
+  componentDidUpdate(prevProp) {
+      if(this.state.helpText !== "Help")
+        console.log("Some")
+  }
+
   render() {
     return (<div className="name">
     <Header title="Header"/>
@@ -23,7 +28,7 @@ class App extends React.Component {
     onChange={event => this.setState({userData: event.target.value})}
     onClick={this.inputClick} 
     onMouseEnter={this.mouseOver} />
-    <p>{this.state.helpText === "Help text!" ? "Yes" : "No"}</p>
+    <p>{this.state.userData === "Help text!" ? "Yes" : "No"}</p>
     <Image image={logo} />
   </div>)
   }
