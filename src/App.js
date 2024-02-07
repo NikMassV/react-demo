@@ -7,42 +7,59 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        users: [
-            {
-                id: 1,
-                firstName: 'Bob',
-                lastName: 'Marley',
-                bio: 'ipsum',
-                age: 40,
-                isHappy: true
-            },
-            {
-                id: 2,
-                firstName: 'John',
-                lastName: 'Doe',
-                bio: 'ipsume',
-                age: 22,
-                isHappy: false
-            }
-        ]
+      users: [
+        {
+          id: 1,
+          firstName: 'Bob',
+          lastName: 'Marley',
+          bio: 'ipsum',
+          age: 40,
+          isHappy: true
+        },
+        {
+          id: 2,
+          firstName: 'John',
+          lastName: 'Doe',
+          bio: 'ipsume',
+          age: 22,
+          isHappy: false
+        }
+      ]
     }
     this.addUser = this.addUser.bind(this)
-}
+    this.deleteUser = this.deleteUser.bind(this)
+    this.editUser = this.editUser.bind(this)
+  }
+
   render() {
     return (<div>
-      <Header title="User List"/>
+      <Header title="User List" />
       <main>
-        <Users users={this.state.users}/>
+        <Users users={this.state.users} onEdit={this.editUser} onDelete={this.deleteUser} />
       </main>
       <aside>
         <AddUser onAdd={this.addUser} />
       </aside>
-  </div>)
+    </div>)
+  }
+
+  deleteUser(id) {
+    this.setState({
+      users: this.state.users.filter((el) => el.id !== id)
+    })
+  }
+
+  editUser(user) {
+    let allUsers = this.state.users
+    allUsers[user.id - 1] = user
+    this.setState({ users: [] }, () => {
+      this.setState({ users: [...allUsers] })
+    })
   }
 
   addUser(user) {
-      const id = this.state.users.length + 1
-      this.setState({ users: [...this.state.users, {id, ...user}]})
+    const id = this.state.users.length + 1
+    this.setState({ users: [...this.state.users, { id, ...user }] })
   }
 }
 
